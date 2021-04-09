@@ -22,8 +22,6 @@ Cortex's base Docker images are listed below. Depending on the Cortex Predictor 
   * `quay.io/cortexlabs/python-predictor-gpu:master-cuda11.1-cudnn8`
 * Python Predictor (Inferentia): `quay.io/cortexlabs/python-predictor-inf:master`
 * TensorFlow Predictor (CPU, GPU, Inferentia): `quay.io/cortexlabs/tensorflow-predictor:master`
-* ONNX Predictor (CPU): `quay.io/cortexlabs/onnx-predictor-cpu:master`
-* ONNX Predictor (GPU): `quay.io/cortexlabs/onnx-predictor-gpu:master`
 
 The sample `Dockerfile` below inherits from Cortex's Python CPU serving image, and installs 3 packages. `tree` is a system package and `pandas` and `rdkit` are Python packages.
 
@@ -77,8 +75,6 @@ For example, to use ECR, first create a repository to store your image:
 # We create a repository in ECR
 
 export AWS_REGION="***"
-export AWS_ACCESS_KEY_ID="***"
-export AWS_SECRET_ACCESS_KEY="***"
 export REGISTRY_URL="***"  # this will be in the format "<aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com"
 
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REGISTRY_URL

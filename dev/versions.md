@@ -10,7 +10,7 @@
 * examples
   * check logs, predictions
   * check metrics, tracker
-  * make sure to try all 8 base images (tf/onnx/py gpu/cpu, tf/py inferentia)
+  * make sure to try all 6 base images (tf/py gpu/cpu, tf/py inferentia)
   * confirm GPUs are used when requested
 
 ## eksctl
@@ -135,7 +135,7 @@ It's probably safest to use the minor version of Python that you get when you
 run `apt-get install python3` ([currently that's what TensorFlow's Docker image does](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/dockerfiles/dockerfiles/cpu.Dockerfile))
 , or what you get by default in Google CoLab. In theory, it should be safe to use the lowest of the maximum supported
 python versions in our pip dependencies (e.g. [tensorflow](https://pypi.org/project/tensorflow)
-, [Keras](https://pypi.org/project/Keras), [numpy](https://pypi.org/project/numpy)
+, [Keras](https://pypi.org/project/Keras),
 , [pandas](https://pypi.org/project/pandas), [scikit-learn](https://pypi.org/project/scikit-learn)
 , [scipy](https://pypi.org/project/scipy), [torch](https://pypi.org/project/torch)
 , [xgboost](https://pypi.org/project/xgboost))
@@ -151,14 +151,6 @@ Note: it's ok if example training notebooks aren't upgraded, as long as the expo
 ## CUDA/cuDNN
 
 1. Search the codebase for the previous CUDA version and `cudnn`. It might be nice to use the version of CUDA which does not require a special pip command when installing pytorch.
-
-## ONNX runtime
-
-1. Update the version in `images/onnx-predictor-cpu/Dockerfile`
-   and `images/onnx-predictor-gpu/Dockerfile` ([releases](https://github.com/microsoft/onnxruntime/releases))
-   * Use the appropriate CUDA/cuDNN version in `images/onnx-predictor-gpu/Dockerfile` ([docs](https://github.com/microsoft/onnxruntime/blob/master/BUILD.md#CUDA))
-   * Search the codebase for the previous version
-1. Search the codebase for the previous ONNX runtime version
 
 ## Nvidia device plugin
 
@@ -221,8 +213,7 @@ Note: it's ok if example training notebooks aren't upgraded, as long as the expo
 
 ## S6-overlay supervisor
 
-1. Locate the `s6-overlay` installation in `images/python-predictor-*/Dockerfile`
-   , `images/tensorflow-predictor/Dockerfile` and `images/onnx-predictor-*/Dockerfile`
+1. Locate the `s6-overlay` installation in `images/python-predictor-*/Dockerfile` and `images/tensorflow-predictor/Dockerfile`.
 1. Update the version in each serving image with the newer one in https://github.com/just-containers/s6-overlay.
 
 ## Nginx
@@ -230,8 +221,7 @@ Note: it's ok if example training notebooks aren't upgraded, as long as the expo
 1. Run a base image of ubuntu that matches the version tag used for the serving images. The running command
    is `docker run -it --rm <base-image>`
 1. Run `apt update && apt-cache policy nginx`. Notice the latest minor version of nginx (e.g. `1.14`)
-1. Locate the `nginx` package in `images/python-predictor-*/Dockerfile`, `images/tensorflow-predictor/Dockerfile`
-   and `images/onnx-predictor-*/Dockerfile`
+1. Locate the `nginx` package in `images/python-predictor-*/Dockerfile` and `images/tensorflow-predictor/Dockerfile`.
 1. Update the version for all `nginx` appearances using the minor version from step 2 and add an asterisk at the end to
    denote any version (e.g. `1.14.*`)
 
